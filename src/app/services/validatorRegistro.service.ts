@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidator, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { delay, map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ValidatorRegistroService implements AsyncValidator{
 
 
   solucion: string= "";
+  private baseUrl: string = environment.baseUrl; 
   constructor(private http: HttpClient) { }
 
 
@@ -64,7 +66,7 @@ export class ValidatorRegistroService implements AsyncValidator{
     const email = control.value;
     let respuesta : string ="";
     console.log(email);
-    return this.http.get<any[]>(`http://localhost:8080/usuario?email=${ email}`)
+    return this.http.get<any[]>(`${this.baseUrl}/usuario?email=${ email}`)
                 .pipe(
                   //Timpo de respuesta en comprobar el resultado
                    delay(1500),
