@@ -1,0 +1,136 @@
+<!-- <div class="w-100 d-flex row">
+ 
+  <div class="col-12 col-lg-8 profileAdaptermd profileAdapterlg" > -->
+    <h2 class="pt-5 mb-0 mb-3 ms-5">Mis Currito's</h2>
+
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pendientes</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Terminados</button>
+       </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+
+      <!-- Tabla para mostrar mis anuncios -->
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <!-- Data table para mayores de lg -->
+        <p-table #dt2 [value]="listaMisAnuncios" responsiveLayout="stack" breakpoint="815px" [paginator]="true" [rows]="10" [showCurrentPageReport]="false" 
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5,10,20]" [globalFilterFields]="['listaCategorias.nombre']">        
+        
+        
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th></th>
+                  <th pSortableColumn="titulo">Título <p-sortIcon field="titulo"></p-sortIcon></th>
+                  <th pSortableColumn="categoria">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
+                  <!-- <p-columnFilter field="listaCategorias.nombre" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'customer-badge categoria-' + option">{{option.nombre}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter> -->
+                  <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+                  <th pSortableColumn="fechaAnuncio">Fecha <p-sortIcon field="fechaAnuncio"></p-sortIcon></th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
+                  <th>Finalizado</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-anuncio let-columns="anuncio">
+              <tr>
+                <td><img src="https://www.hola.com/imagenes/decoracion/20210513189473/plantas-sustituir-cesped-jardin-mc/0-951-526/alternativas-cesped-1-a.jpg" alt="Imagen" width="50" class="shadow-4" /></td>
+                  <td [routerLink]="['/anuncio-detalle', anuncio.id]" class='textoConPuntos ' ><span class="p-column-title" pSortableColumn="titulo"><strong>Título</strong></span>{{anuncio.titulo}}</td>
+                  <td [routerLink]="['/anuncio-detalle', anuncio.id]"><span class="p-column-title" pSortableColumn="categoria"><strong>Categoría</strong></span>{{anuncio.categoria}}</td>
+                  <td [routerLink]="['/anuncio-detalle', anuncio.id]"><span class="p-column-title" pSortableColumn="precio"><strong>Precio</strong></span>{{anuncio.precio}} €</td>
+                  <td [routerLink]="['/anuncio-detalle', anuncio.id]" style="overflow: hidden;"><span class="p-column-title" pSortableColumn="fechaAnuncio"><strong>Fecha</strong></span>{{anuncio.fechaAnuncio}}</td>
+                  <td class="ocultarMenor680" (click)="seleccionarEventoEditar(anuncio)"><span class="p-column-title " >Editar</span><a class="btn"><i class="bi bi-pencil-fill focusEditar"></i></a></td>
+                  <td class="ocultarMenor680" (click)="borrarAnuncio(anuncio.id)"><span class="p-column-title ">Borrar</span><a class="btn"><i class="bi bi-trash-fill focusBorrar"></i></a></td>
+
+                  <td class="ocultarMenor680" (click)="finalizarAnuncio(anuncio.id)"><span class="p-column-title ">Finalizado</span><a class="btn"><i class="bi bi-check2-square focusFinalizado"></i></a></td>
+                  
+                    
+                  <!-- <p-confirmDialog #cd [style]="{width: '50vw'}">
+                    <ng-template pTemplate="header">
+                        <h3>Header Content</h3>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                    </ng-template>
+                </p-confirmDialog> -->
+                
+                  <td class=" justify-content-evenly ocultarMayor679">
+                    <a class="btn fs-5" (click)="seleccionarEventoEditar(anuncio)"><i class="bi bi-pencil-fill focusEditar"></i></a>
+                    <a class="btn fs-5" (click)="borrarAnuncio(anuncio.id)"><i class="bi bi-trash-fill focusBorrar"></i></a>
+                    <a class="btn fs-5" (click)="finalizarAnuncio(anuncio.id)"><i class="bi bi-check2-square focusFinalizado"></i></a>
+                  </td>
+              </tr>
+          </ng-template>
+          
+        </p-table>
+
+        <!-- Mensaje que se mostrará si no hay ningún currito publicado -->
+        <div *ngIf="this.listaMisAnuncios.length == 0" class="w-100 text-center navy mt-5">
+          <p>Aún no has publicado ningún currito</p>
+      </div>
+
+      </div>
+
+
+
+
+      <!-- Esta bla es para anuncios terminados -->
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <p-table [value]="listaMisAnunciosTerminados" [rows]="10" responsiveLayout="stack" breakpoint="750px">        
+          <!-- <ng-template pTemplate="caption">
+            Stack
+          </ng-template> -->
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th></th>
+                  <th pSortableColumn="titulo">Título <p-sortIcon field="titulo"></p-sortIcon></th>
+                  <th pSortableColumn="categoria">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
+                  <th pSortableColumn="precio">Precio <p-sortIcon field="precio"></p-sortIcon></th>
+                  <th pSortableColumn="fechaAnuncio">Fecha inicio<p-sortIcon field="fechaAnuncio"></p-sortIcon></th>
+                  <th pSortableColumn="fechaAnuncio">Fecha fin<p-sortIcon field="fechaAnuncio"></p-sortIcon></th>
+                  
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-anuncioTerminado let-columns="anuncio">
+              <tr>
+                  <td><span class="p-column-title"></span><i class="bi bi-apple"></i></td>
+                  <td ><span class="p-column-title" pSortableColumn="titulo"><strong>Título</strong></span>{{anuncioTerminado.titulo}}</td>
+                  <td><span class="p-column-title" pSortableColumn="categoria"><strong>Categoría</strong></span>{{anuncioTerminado.categoria}}</td>
+                  <td><span class="p-column-title" pSortableColumn="precio"><strong>Precio</strong></span>{{anuncioTerminado.precio}} €</td>
+                  <td><span class="p-column-title" pSortableColumn="fechaAnuncio"><strong>Fecha creación</strong></span>{{anuncioTerminado.fechaAnuncio}}</td>
+                  <td><span class="p-column-title" pSortableColumn="fechaFin"><strong>Fecha fin</strong></span>{{anuncioTerminado.fechaFin}}</td>
+                  
+              </tr>
+          </ng-template>
+        </p-table>
+
+        <!-- Mensaje que se mostrará si no hay ningún currito que te hayan realizado -->
+        <div *ngIf="this.listaMisAnunciosTerminados.length == 0" class="w-100 text-center navy mt-5">
+          <p>Aún no te han realizado ningún currito</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Este es el mensaje cuando se clickea el boton de borrar anuncio -->
+    <p-toast position="bottom-center" ></p-toast>
+    
+
+  
+
+    <p-dialog [(visible)]="dialogoVisible">
+      <app-add-currito [edit]="true" [anuncioEditar]="anuncioSeleccionado"></app-add-currito>
+      
+  </p-dialog>
+  <!-- </div>
+</div> -->
+

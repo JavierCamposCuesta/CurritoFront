@@ -1,0 +1,46 @@
+<!-- Barra de navegación -->
+<header class="w-100 fixed-top " style="background-color: navy; z-index: 3;">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a href="#" class="text-white navbar-brand">
+          <h1 class="d-none d-sm-block d-md-block d-lg-block">Currito'S</h1>
+        </a>
+
+          <app-search  class="w-100 d-block d-sm-none d-md-none d-lg-none"></app-search>
+          <app-search  class="w-75 d-none d-sm-block d-md-block d-lg-none"></app-search>
+          <app-search  class="w-50 d-none d-lg-block d-xl-none"></app-search>
+          <app-search  class="w-50 d-none d-lg-none d-xl-block"></app-search>
+  
+          <ul class="d-none d-sm-none d-md-none d-lg-flex me-auto mb-2 mb-lg-0 w-50 justify-content-evenly">
+            <li class="nav-item d-flex">
+              <i
+                class="bi bi-plus-circle"
+                style="color: white; font-size: 1.5em"
+              ></i>
+              <a class="nav-link text-white" aria-current="page" [routerLink]="['profile/addCurrito']">
+                <h5>Nuevo Currito</h5>
+              </a>
+            </li>
+            <li class="nav-item d-flex d-md-none d-lg-none d-xl-flex">
+              <i
+                class="bi bi-chat-dots"
+                style="color: white; font-size: 1.5em"
+              ></i>
+              <a class="nav-link text-white" aria-current="page" [routerLink]="['messages']">
+                <h5>Mis Mensajes</h5>
+              </a>
+            </li>
+            <li class="nav-item d-flex">
+              <i
+                class="bi bi-person-circle"
+                style="color: white; font-size: 1.5em"
+              ></i>
+              <a class="nav-link text-white" aria-current="page" [routerLink]="['profile']">
+                <h5>Mi perfil</h5>
+              </a>
+            </li>
+          </ul>
+        </div>
+      
+    </nav>
+  </header>
